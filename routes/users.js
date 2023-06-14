@@ -1,17 +1,12 @@
-const router = require('express').Router();
+const { Router } = require('express');
 
-const {
-  updateUserProfileValidation,
-} = require('../validations/usersValidation');
+const router = Router();
 
-const {
-  getCurrentUserInfo,
-  updateUserProfile,
-} = require('../controllers/users');
-
+const { getCurrentUser, updateUserProfile } = require('../controllers/users');
+const { getUserIdValidation, updateUserProfileValidation } = require('../validations/usersValidation');
 
 // Находим пользователя:
-router.get('/me', getCurrentUserInfo);
+router.get('/me', getUserIdValidation, getCurrentUser);
 // Обновление профиля:
 router.patch('/me', updateUserProfileValidation, updateUserProfile);
 
