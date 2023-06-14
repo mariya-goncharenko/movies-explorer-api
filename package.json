@@ -1,0 +1,27 @@
+{
+  "name": "movies-explorer-api",
+  "version": "1.0.0",
+  "description": "Дипломный проект от Яндекс.Практикум. Бэкенд.",
+  "main": "app.js",
+  "scripts": {
+    "lint": "npx eslint .",
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mariya-goncharenko/movies-explorer-api.git"
+  },
+  "keywords": [],
+  "author": "Мария Гончаренко",
+  "license": "ISC",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "eslint": "^8.39.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-require": "^0.0.1",
+    "nodemon": "^2.0.22"
+  }
+}
