@@ -10,7 +10,6 @@
 - DELETE /movies/_id - удаляет сохранённый фильм по id;
 - POST /signup - регистрация пользователя;
 - POST /signin - авторизация пользователя;
-- POST /signout - делает logout пользователя и удаляет JWT-токен из куки
 
 ### Функционал API: 
 + Регистрация
@@ -42,7 +41,6 @@
 - [Критерии оценки дипломной работы](https://code.s3.yandex.net/web-developer/static/new-program/web-diploma-criteria-2.0/index.html)
 
 ## Ссылки на проект:
-IP - 
-Backend - 
+IP - 51.250.12.97
+Backend - api.moviesexp.nomoredomains.rocks
 Frontend - 
-

@@ -7,7 +7,7 @@ const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
 
 
-const getCurrentUser = (req, res, next) => {
+module.exports.getCurrentUserInfo = (req, res, next) => {
   const userId = req.user._id;
   User.findById(userId)
     .orFail(() => {
