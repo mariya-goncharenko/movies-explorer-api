@@ -16,12 +16,21 @@
   "author": "Мария Гончаренко",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "celebrate": "^15.0.1",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-rate-limit": "^6.7.0",
+    "express-winston": "^4.2.0",
+    "helmet": "^6.1.5",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.1.0",
+    "winston": "^3.9.0"
   },
   "devDependencies": {
     "eslint": "^8.39.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-require": "^0.0.1",
     "nodemon": "^2.0.22"
   }
 }
