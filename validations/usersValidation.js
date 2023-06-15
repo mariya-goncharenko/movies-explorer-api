@@ -1,19 +1,19 @@
-const { celebrate, Joi } = require('celebrate');
+const { Joi, celebrate } = require('celebrate');
 
-const updateUserProfileValidation = celebrate({
+const getCurrentUserValidator = celebrate({
+  params: Joi.object().keys({
+    userId: Joi.string().hex().length(24),
+  }),
+});
+
+const updateUserValidator = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().min(2).max(30).required(),
+    name: Joi.string().required().min(2).max(30),
     email: Joi.string().required().email({ tlds: { allow: false } }),
   }),
 });
 
-const getUserIdValidation = celebrate({
-  params: Joi.object().keys({
-    id: Joi.string().length(24).hex().required(),
-  }),
-});
-
 module.exports = {
-  updateUserProfileValidation,
-  getUserIdValidation,
+  getCurrentUserValidator,
+  updateUserValidator,
 };

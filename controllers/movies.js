@@ -1,79 +1,92 @@
+// Импорт схемы:
 const Movie = require('../models/movie');
-const BadRequestError = require('../errors/BadRequestError');
+
+// Импорты ошибок:
 const ForbiddenError = require('../errors/ForbiddenError');
+const NotFoundError = require('../errors/NotFoundError');
+const BadRequestError = require('../errors/BadRequestError');
 
-const getMovies = async (req, res, next) => {
-  try {
-    const movies = await Movie.find({ owner: req.user._id });
-    res.send(movies);
-  } catch (error) {
-    next(error);
-  }
+// Получение списка фильмов с привязкой к конкретному пользователю:
+const getMovies = (req, res, next) => {
+  Movie.find({ owner: req.user._id })
+    .then((movies) => {
+      res.send(movies);
+    })
+    .catch(next);
 };
 
-const createMovie = async (req, res, next) => {
-  try {
-    const {
-      country,
-      director,
-      duration,
-      year,
-      description,
-      image,
-      trailerLink,
-      thumbnail,
-      movieId,
-      nameRU,
-      nameEN,
-    } = req.body;
+// Создание нового фильма в БД, связано с пользователем:
+const createMovie = (req, res, next) => {
+  const {
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailerLink,
+    thumbnail,
+    movieId,
+    nameRU,
+    nameEN,
+  } = req.body;
 
-    const movie = await Movie.create({
-      country,
-      director,
-      duration,
-      year,
-      description,
-      image,
-      trailerLink,
-      thumbnail,
-      movieId,
-      nameRU,
-      nameEN,
-      owner: req.user._id,
+  // Создание нового документа фильма в базе данных
+  Movie.create({
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailerLink,
+    thumbnail,
+    movieId,
+    nameRU,
+    nameEN,
+    owner: req.user._id,
+  })
+    .then((movie) => res.send(movie))
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        next(
+          new BadRequestError(
+            'Переданы некорректные данные при создании карточки фильма',
+          ),
+        );
+      } else {
+        next(err);
+      }
     });
-
-    res.send(movie);
-  } catch (error) {
-    if (error.name === 'ValidationError') {
-      next(
-        new BadRequestError(
-          'Переданы некорректные данные при создании карточки фильма',
-        ),
-      );
-    } else {
-      next(error);
-    }
-  }
 };
 
-const deleteMovie = async (req, res, next) => {
-  try {
-    const movie = await Movie.findById(req.params.movieId).orFail();
-    const owner = movie.owner.toString();
+// Удаление фильма:
+const deleteMovie = (req, res, next) => {
+  Movie.findById(req.params.movieId)
+    .orFail(() => {
+      throw new NotFoundError('Фильм с указанным _id не найден');
+    })
+    .then((movie) => {
+      const owner = movie.owner.toString();
 
-    if (req.user._id === owner) {
-      await Movie.deleteOne(movie);
-      res.send(movie);
-    } else {
-      throw new ForbiddenError('Невозможно удалить фильм');
-    }
-  } catch (error) {
-    if (error.name === 'CastError') {
-      next(new BadRequestError('Переданы некорректные данные удаления'));
-    } else {
-      next(error);
-    }
-  }
+      // Проверка владельца фильма:
+      if (req.user._id === owner) {
+        Movie.deleteOne(movie)
+          .then(() => {
+            res.send(movie);
+          })
+          .catch(next);
+      } else {
+        throw new ForbiddenError('Невозможно удалить фильм');
+      }
+    })
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        next(new BadRequestError('Переданы некорректные данные для удаления'));
+      } else {
+        next(err);
+      }
+    });
 };
 
 module.exports = {

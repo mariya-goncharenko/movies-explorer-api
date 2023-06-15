@@ -1,24 +1,28 @@
-const { Router } = require('express');
-
-const router = Router();
+const router = require('express').Router();
 
 const auth = require('../middlewares/auth');
+
+const userRouter = require('./users');
+const movieRouter = require('./movies');
+
+const { registerUser, loginUser } = require('../controllers/auth');
+const {
+  loginValidator,
+  registerValidator,
+} = require('../validations/authValidation');
+
 const NotFoundError = require('../errors/NotFoundError');
 
-// Маршруты для аутентификации
-router.use('/', require('./signin'));
-router.use('/', require('./signup'));
+router.post('/signup', registerValidator, registerUser);
+router.post('/signin', loginValidator, loginUser);
 
-// Проверка аутентификации
 router.use(auth);
 
-// Маршруты для пользователей
-router.use('/users', require('./users'));
+router.use('/', userRouter);
+router.use('/', movieRouter);
 
-// Маршруты для карточек
-router.use('/movies', require('./movies'));
-
-// Обработка несуществующих маршрутов
-router.use((req, res, next) => next(new NotFoundError('Страницы по запрошенному URL не существует')));
+router.use('*', (req, res, next) => {
+  next(new NotFoundError('Страница не найдена'));
+});
 
 module.exports = router;

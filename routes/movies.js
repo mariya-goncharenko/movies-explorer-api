@@ -1,6 +1,4 @@
-const { Router } = require('express');
-
-const movieRouter = Router();
+const movieRouter = require('express').Router();
 
 const {
   getMovies,
@@ -13,13 +11,11 @@ const {
   deleteMovieValidator,
 } = require('../validations/moviesValidation');
 
-// Получить все сохраненные фильмы текущего пользователя
-movieRouter.get('/', getMovies);
-
-// Создать фильм с переданными данными
-movieRouter.post('/', createMovieValidator, createMovie);
-
-// Удалить сохраненный фильм по его ID
-movieRouter.delete('/:movieId', deleteMovieValidator, deleteMovie);
+// Получение списка фильмов:
+movieRouter.get('/movies', getMovies);
+// Создания нового фильма:
+movieRouter.post('/movies', createMovieValidator, createMovie);
+// Удаление фильма:
+movieRouter.delete('/movies/:movieId', deleteMovieValidator, deleteMovie);
 
 module.exports = movieRouter;

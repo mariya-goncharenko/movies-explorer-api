@@ -1,21 +1,21 @@
-const { celebrate, Joi } = require('celebrate');
+const { Joi, celebrate } = require('celebrate');
 
-const signInValidation = celebrate({
+const loginValidator = celebrate({
   body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required().min(6),
+    email: Joi.string().required().email({ tlds: { allow: false } }),
+    password: Joi.string().required(),
   }),
 });
 
-const signUpValidation = celebrate({
+const registerValidator = celebrate({
   body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required().min(6),
-    name: Joi.string().min(2).max(30),
+    name: Joi.string().required().min(2).max(30),
+    email: Joi.string().required().email({ tlds: { allow: false } }),
+    password: Joi.string().required(),
   }),
 });
 
 module.exports = {
-  signInValidation,
-  signUpValidation,
+  loginValidator,
+  registerValidator,
 };

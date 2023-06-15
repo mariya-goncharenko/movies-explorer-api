@@ -1,13 +1,13 @@
-const { Router } = require('express');
+const userRouter = require('express').Router();
+const { getCurrentUser, updateUser } = require('../controllers/users');
+const {
+  getCurrentUserValidator,
+  updateUserValidator,
+} = require('../validations/usersValidation');
 
-const router = Router();
+// Получение пользователя:
+userRouter.get('/users/me', getCurrentUserValidator, getCurrentUser);
+// Изменение данных пользователя:
+userRouter.patch('/users/me', updateUserValidator, updateUser);
 
-const { getCurrentUser, updateUserProfile } = require('../controllers/users');
-const { getUserIdValidation, updateUserProfileValidation } = require('../validations/usersValidation');
-
-// Находим пользователя:
-router.get('/me', getUserIdValidation, getCurrentUser);
-// Обновление профиля:
-router.patch('/me', updateUserProfileValidation, updateUserProfile);
-
-module.exports = router;
+module.exports = userRouter;
