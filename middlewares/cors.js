@@ -1,7 +1,6 @@
 const allowedCors = [
-  // 'https://',
-  // 'http://',
-  // Добавь сюда адрес фронта, когда сделаешь!
+  'https://moviexp.nomoredomains.rocks',
+  'http://moviexp.nomoredomains.rocks',
   'https://127.0.0.1:3000',
   'http://127.0.0.1:3001',
 ];
