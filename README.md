@@ -7,7 +7,7 @@
 - PATCH /users/me - обновляет информацию о пользователе;
 - GET /movies - возвращает все сохранённые текущим пользователем фильмы;
 - POST /movies - создаёт фильм;
-- DELETE /movies/_id - удаляет сохранённый фильм по id;
+- DELETE /movies/:movieId - удаляет сохранённый фильм по id;
 - POST /signup - регистрация пользователя;
 - POST /signin - авторизация пользователя;
 
@@ -41,6 +41,7 @@
 - [Критерии оценки дипломной работы](https://code.s3.yandex.net/web-developer/static/new-program/web-diploma-criteria-2.0/index.html)
 
 ## Ссылки на проект:
+
 IP - 51.250.12.97
-Backend - api.moviesexp.nomoredomains.rocks
-Frontend - 
+
+Backend - https://api.moviesexp.nomoredomains.rocks
