@@ -42,6 +42,6 @@
 
 ## Ссылки на проект:
 
-IP - 51.250.12.97
-
+IP - 158.160.103.88
 Backend - https://api.moviesexp.nomoredomains.rocks
+Frontend - https://moviexp.nomoredomains.rocks
